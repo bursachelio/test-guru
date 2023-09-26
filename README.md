@@ -1,24 +1,14 @@
-# README
+Сущности проекта TestGuru
+Пользователь (User): Зарегистрированный пользователь системы, который может создавать, проходить и просматривать тесты.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Тест (Test): Учебный или проверочный тест, состоящий из вопросов и вариантов ответов.
 
-Things you may want to cover:
+Вопрос (Question): Отдельный вопрос, входящий в состав теста. Содержит текст вопроса и список вариантов ответов.
 
-* Ruby version
+Вариант ответа (Answer): Один из возможных ответов на вопрос. Связан с вопросом и может быть правильным или неправильным.
 
-* System dependencies
+Категория (Category): Категория, к которой относится тест. Позволяет классифицировать тесты по разным темам.
 
-* Configuration
+Результат тестирования (Test Result): Результат, полученный пользователем после прохождения теста. Содержит информацию о количестве правильных ответов и общем балле.
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Автор (Author): Пользователь, который создал тест. Связан с тестами в качестве автора.
