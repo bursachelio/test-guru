@@ -16,7 +16,7 @@ users = User.create!([
 # Создание категорий
 categories = Category.create!([
   { title: 'Advanced' },
-  { title: 'Beginer' }
+  { title: 'Begginer' }
 ])
 # Создание тестов
 tests = Test.create!([
