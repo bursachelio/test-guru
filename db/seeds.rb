@@ -11,51 +11,44 @@
 users = User.create!([
   { name: 'Author', email: 'author@example.com' },
   { name: 'User 1', email: 'user1@example.com' }
- ])
+])
 
 # Создание категорий
 categories = Category.create!([
   { title: 'Advanced' },
-  { title: 'Begginer' }
+  { title: 'Beginner' }
 ])
+
 # Создание тестов
 tests = Test.create!([
-  { title: 'Test 1', level: 1, category_id: categories[0].id, author_id: users[0].id },
-  { title: 'Test 2', level: 2, category_id: categories[1].id, author_id: users[1].id }
+  { title: 'Test 1', level: 1, category: categories[0], author: users[0] },
+  { title: 'Test 2', level: 2, category: categories[1], author: users[1] }
 ])
 
 # Создание вопросов для тестов
 questions = Question.create!([
-  { body: 'Question 1 for Test 1', test_id: tests[0].id },
-  { body: 'Question 2 for Test 1', test_id: tests[0].id },
-  { body: 'Question 1 for Test 2', test_id: tests[1].id },
-  { body: 'Question 2 for Test 2', test_id: tests[1].id }
+  { body: 'Question 1 for Test 1', test: tests[0] },
+  { body: 'Question 2 for Test 1', test: tests[0] },
+  { body: 'Question 1 for Test 2', test: tests[1] },
+  { body: 'Question 2 for Test 2', test: tests[1] }
 ])
 
 # Создание ответов для вопросов
-Answer.create!([
-  { body: 'Answer 1 for Question 1', correct: true, question_id: questions[0].id },
-  { body: 'Answer 2 for Question 1', correct: false, question_id: questions[0].id },
-  { body: 'Answer 3 for Question 1', correct: false, question_id: questions[0].id },
-  { body: 'Answer 4 for Question 1', correct: false, question_id: questions[0].id },
-  { body: 'Answer 1 for Question 2', correct: false, question_id: questions[1].id },
-  { body: 'Answer 2 for Question 2', correct: true, question_id: questions[1].id },
-  { body: 'Answer 3 for Question 2', correct: false, question_id: questions[1].id },
-  { body: 'Answer 4 for Question 2', correct: false, question_id: questions[1].id },
-  { body: 'Answer 1 for Question 3', correct: false, question_id: questions[2].id },
-  { body: 'Answer 2 for Question 3', correct: false, question_id: questions[2].id },
-  { body: 'Answer 3 for Question 3', correct: true, question_id: questions[2].id },
-  { body: 'Answer 4 for Question 3', correct: false, question_id: questions[2].id },
-  { body: 'Answer 1 for Question 4', correct: false, question_id: questions[3].id },
-  { body: 'Answer 2 for Question 4', correct: false, question_id: questions[3].id },
-  { body: 'Answer 3 for Question 4', correct: false, question_id: questions[3].id },
-  { body: 'Answer 4 for Question 4', correct: true, question_id: questions[3].id }
+answers = Answer.create!([
+  { body: 'Answer 1 for Question 1', correct: true, question: questions[0] },
+  { body: 'Answer 2 for Question 1', correct: false, question: questions[0] },
+  { body: 'Answer 3 for Question 1', correct: false, question: questions[0] },
+  { body: 'Answer 4 for Question 1', correct: false, question: questions[0] },
+  { body: 'Answer 1 for Question 2', correct: false, question: questions[1] },
+  { body: 'Answer 2 for Question 2', correct: true, question: questions[1] },
+  { body: 'Answer 3 for Question 2', correct: false, question: questions[1] },
+  { body: 'Answer 4 for Question 2', correct: false, question: questions[1] },
 ])
 
-Result.create!([
-  { user_id: users[0].id, test_id: tests[0].id },
-  { user_id: users[1].id, test_id: tests[1].id }
+# Создание результатов
+results = Result.create!([
+  { user: users[0], test: tests[0] },
+  { user: users[1], test: tests[1] }
 ])
-
 
 puts 'Успешно созданы начальные данные'
