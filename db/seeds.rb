@@ -27,7 +27,7 @@ tests = Test.create!([
 
 # Создание вопросов для тестов
 questions = Question.create!([
-  { body: 'Question 1 for Test 1', test: tests[0] },
+  { body: 'Какой цвет у неба?', test: tests[0] },
   { body: 'Question 2 for Test 1', test: tests[0] },
   { body: 'Question 1 for Test 2', test: tests[1] },
   { body: 'Question 2 for Test 2', test: tests[1] }
@@ -35,14 +35,22 @@ questions = Question.create!([
 
 # Создание ответов для вопросов
 answers = Answer.create!([
-  { body: 'Answer 1 for Question 1', correct: true, question: questions[0] },
-  { body: 'Answer 2 for Question 1', correct: false, question: questions[0] },
-  { body: 'Answer 3 for Question 1', correct: false, question: questions[0] },
-  { body: 'Answer 4 for Question 1', correct: false, question: questions[0] },
+  { body: 'Синий', correct: true, question: questions[0] },
+  { body: 'Зеленый', correct: false, question: questions[0] },
+  { body: 'Красный', correct: false, question: questions[0] },
+  { body: 'Желтый', correct: false, question: questions[0] },
   { body: 'Answer 1 for Question 2', correct: false, question: questions[1] },
   { body: 'Answer 2 for Question 2', correct: true, question: questions[1] },
   { body: 'Answer 3 for Question 2', correct: false, question: questions[1] },
   { body: 'Answer 4 for Question 2', correct: false, question: questions[1] },
+  { body: 'Answer 1 for Question 1', correct: false, question: questions[2] },
+  { body: 'Answer 2 for Question 1', correct: true, question: questions[2] },
+  { body: 'Answer 3 for Question 1', correct: false, question: questions[2] },
+  { body: 'Answer 4 for Question 1', correct: false, question: questions[2] },
+  { body: 'Answer 1 for Question 2', correct: false, question: questions[3] },
+  { body: 'Answer 2 for Question 2', correct: true, question: questions[3] },
+  { body: 'Answer 3 for Question 2', correct: false, question: questions[3] },
+  { body: 'Answer 4 for Question 2', correct: false, question: questions[3] }
 ])
 
 # Создание результатов
