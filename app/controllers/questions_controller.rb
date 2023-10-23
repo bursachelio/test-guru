@@ -1,4 +1,7 @@
 class QuestionsController < ApplicationController
+
+  rescue_from ActiveRecord::RecordNotFound, with: :question_not_found
+  
   before_action :find_test, only: [:index, :new, :create, :show, :edit, :update, :destroy]
   
   def index
@@ -27,5 +30,9 @@ class QuestionsController < ApplicationController
 
   def question_params
     params.require(:question).permit(:body)
+  end
+
+  def question_not_found
+    redirect_to tests_path, alert: "Вопрос не найден"
   end
 end
