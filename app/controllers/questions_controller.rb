@@ -13,13 +13,16 @@ class QuestionsController < ApplicationController
   end
 
   def new
-    @question = @test.questions.build
+    @question = @test.questions
   end
 
   def create
-    @question = @test.questions.find(params[:id])
-    @questions.destroy
-    redirect_to test_questions_path(@test), notice: "Вопрос успешно удалён"
+    @question = @test.questions.build(question_params)
+    if @question.save
+      redirect_to test_questions_path(@test), notice: "Вопрос успешно создан"
+    else
+      render :new
+    end
   end
 
   private
