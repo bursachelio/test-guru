@@ -1,15 +1,14 @@
 class QuestionsController < ApplicationController
-  rescue_from ActiveRecord::RecordNotFound, with: :question_not_found
-
-  before_action :find_test, except: [:new, :create]
-  before_action :find_question, only: [:show, :edit, :update, :destroy]
+  before_action :find_test
+  before_action :find_question, only: %i[show destroy]
 
   def index
     @questions = @test.questions
+    render plain: @questions.map(&:content).join("\n"), status: :ok
   end
 
   def show
-  
+    render plain: @question.content, status: :ok
   end
 
   def new
@@ -17,29 +16,33 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @question = @test.questions.build(question_params)
+    @question = @test.questions.new(question_params)
     if @question.save
-      redirect_to test_questions_path(@test), notice: "Вопрос успешно создан"
+      render plain: 'Question was successfully created!', status: :created
     else
-      render :new
+      render plain: 'Question creation failed!', status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @question.destroy
+    render plain: 'Question was successfully deleted!', status: :ok
   end
 
   private
 
   def find_test
     @test = Test.find(params[:test_id])
+  rescue ActiveRecord::RecordNotFound
+    render plain: 'Test not found', status: :not_found
   end
 
   def find_question
-    @question = @test.questions.find(params[:id])
+    @question = @test.questions.find_by(id: params[:id])
+    render plain: 'Question not found', status: :not_found unless @question
   end
 
   def question_params
-    params.require(:question).permit(:body)
-  end
-
-  def question_not_found
-    redirect_to tests_path, alert: "Вопрос не найден"
+    params.require(:question).permit(:content)
   end
 end
