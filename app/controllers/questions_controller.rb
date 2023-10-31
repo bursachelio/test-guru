@@ -1,48 +1,46 @@
 class QuestionsController < ApplicationController
   before_action :find_test
-  before_action :find_question, only: [:show, :destroy]
-  
+  before_action :find_question, only: [:show, :edit, :update, :destroy]
+
   def index
     @questions = @test.questions
-    render plain: @questions.map(&:content).join("\n"), status: :ok
+    render plain: 'Это список вопросов теста'
   end
 
   def show
-    render plain: @question.content, status: :ok
+    render plain: 'Это конкретный вопрос'
   end
 
   def new
-    @question = @test.questions.new
+    @question = Question.new
   end
 
   def create
-    @question = @test.questions.new(question_params)
+    @question = @test.questions.build(question_params)
     if @question.save
-      render plain: 'Вопрос успешно создан!', status: :created
+      redirect_to test_questions_path(@test), notice: 'Вопрос успешно создан'
     else
-      render :new, status: :unprocessable_entity
+      render 'new'
     end
-  end  
+  end
 
   def destroy
     @question.destroy
-    render plain: 'Question was successfully deleted!', status: :ok
+    redirect_to test_questions_path(@test), notice: 'Вопрос успешно удален'
   end
 
   private
 
   def find_test
-    @test = Test.find(params[:test_id])
-  rescue ActiveRecord::RecordNotFound
-    render plain: "Test not found", status: :not_found
+    @test = Test.find_by(params[:id])
   end
 
   def find_question
     @question = @test.questions.find_by(id: params[:id])
-    render plain: "Question not found", status: :not_found unless @question
+    render plain: 'Вопрос не найден', status: :not_found unless @question
   end
 
   def question_params
-    params.require(:question).permit(:content)
+    params.require(:question).permit(:body)
   end
 end
