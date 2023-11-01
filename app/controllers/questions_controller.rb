@@ -1,10 +1,9 @@
 class QuestionsController < ApplicationController
-  before_action :find_test
   before_action :find_question, only: [:show, :edit, :update, :destroy]
 
   def index
-    @questions = @test.questions
-    render plain: 'Это список вопросов теста'
+    @questions = Question.all
+    render plain: 'Это список вопросов'
   end
 
   def show
@@ -12,13 +11,15 @@ class QuestionsController < ApplicationController
   end
 
   def new
+    @test = Test.find(params[:test_id])
     @question = Question.new
   end
 
   def create
+    @test = Test.find(params[:test_id])
     @question = @test.questions.build(question_params)
     if @question.save
-      redirect_to test_questions_path(@test), notice: 'Вопрос успешно создан'
+      redirect_to question_path(@question), notice: 'Вопрос успешно создан'
     else
       render 'new'
     end
@@ -26,18 +27,15 @@ class QuestionsController < ApplicationController
 
   def destroy
     @question.destroy
-    redirect_to test_questions_path(@test), notice: 'Вопрос успешно удален'
+    redirect_to question_path
   end
 
   private
 
-  def find_test
-    @test = Test.find_by(params[:id])
-  end
-
   def find_question
-    @question = @test.questions.find_by(id: params[:id])
-    render plain: 'Вопрос не найден', status: :not_found unless @question
+    @question = Question.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render plain: 'Вопрос не найден', status: :not_found
   end
 
   def question_params
