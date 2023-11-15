@@ -1,4 +1,5 @@
 module ApplicationHelper
+  
   def author_name
     'Иван Бурсак'
   end

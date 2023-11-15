@@ -8,6 +8,13 @@
   <%= @test.level %>
 </p>
 
+<h2>Questions:</h2>
+<ul>
+  <% @questions.each do |question| %>
+    <li><%= question.body %></li>
+  <% end %>
+</ul>
+
 <%= link_to 'Редактировать', edit_test_path(@test) %>
 
 <%= link_to "Назад к тестам", tests_path %>
