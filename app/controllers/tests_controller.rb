@@ -19,6 +19,7 @@ class TestsController < ApplicationController
     if @test.save
       redirect_to @test
     else
+      puts @test.errors.full_messages
       render :new 
     end
   end
@@ -47,6 +48,6 @@ class TestsController < ApplicationController
   end
   
   def test_params
-    params.require(:test).permit(:title, :level, :category_id)
+    params.require(:test).permit(:title, :level, :author_id, :category_id)
   end
 end
