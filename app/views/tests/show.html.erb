@@ -10,9 +10,7 @@
 
 <h2>Questions:</h2>
 <ul>
-  <% @questions.each do |question| %>
-    <li><%= question.body %></li>
-  <% end %>
+  <%= render @questions %>
 </ul>
 
 <%= link_to 'Редактировать', edit_test_path(@test) %>

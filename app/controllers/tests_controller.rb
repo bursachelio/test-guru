@@ -19,7 +19,6 @@ class TestsController < ApplicationController
     if @test.save
       redirect_to @test
     else
-      puts @test.errors.full_messages
       render :new 
     end
   end
