@@ -4,7 +4,11 @@ class QuestionsController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :question_not_found
 
   def show
-    
+    @test = @question.test
+  end
+
+  def edit
+    @test = @question.test
   end
 
   def new
@@ -29,8 +33,9 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
+    @test = @question.test
     @question.destroy
-    redirect_to test_questions_path(@question.test), notice: 'Вопрос успешно удален'
+    redirect_to test_path(@test), notice: 'Вопрос успешно удален'
   end
 
   private

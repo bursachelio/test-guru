@@ -13,6 +13,8 @@
   <%= render @questions %>
 </ul>
 
+<%= link_to "Создать вопрос", new_test_question_path(@test) %>
+
 <%= link_to 'Редактировать', edit_test_path(@test) %>
 
 <%= link_to "Назад к тестам", tests_path %>
