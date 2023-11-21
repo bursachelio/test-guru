@@ -3,17 +3,16 @@ class QuestionsController < ApplicationController
   before_action :find_question, only: [:show, :edit, :update, :destroy]
   rescue_from ActiveRecord::RecordNotFound, with: :question_not_found
 
-  def index
-    @questions = Question.all
-    render plain: @questions.map { |question| question.body }.join("\n")
-  end  
-
   def show
-    render plain: @question.body, status: :ok
+    @test = @question.test
+  end
+
+  def edit
+    @test = @question.test
   end
 
   def new
-    @question = Question.new
+    @question = @test.questions.build
   end
 
   def create
@@ -25,9 +24,18 @@ class QuestionsController < ApplicationController
     end
   end
 
+  def update
+    if @question.update(question_params)
+      redirect_to question_path(@question), notice: 'Вопрос успешно обовлён'
+    else
+      render 'edit'
+    end
+  end
+
   def destroy
+    @test = @question.test
     @question.destroy
-    redirect_to questions_path, notice: 'Вопрос успешно удален'
+    redirect_to test_path(@test), notice: 'Вопрос успешно удален'
   end
 
   private
