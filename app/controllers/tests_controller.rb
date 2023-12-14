@@ -1,8 +1,9 @@
 class TestsController < ApplicationController
-  before_action :set_test, only: %i[show edit update destroy start]
-  before_action :set_user, only: :start
+  before_action :set_test, only: %i[show edit update destroy]
 
   def start
+    set_test
+    set_user
     @user.tests.push(@test)
     redirect_to @user.result(@test)
   end

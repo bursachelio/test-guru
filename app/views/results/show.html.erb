@@ -1,7 +1,7 @@
 <h1>Passing the <%= @result.test.title %> Test</h1>
 
 <b>
-  Question <%= @result.test.questions.index(@result.current_question) + 1 %> out of <%= @result.test.questions.count %>: <%= @result.current_question.body %> 
+  Question <%= @result.current_question_number %> out of <%= @result.test.questions.count %>: <%= @result.current_question.body %> 
 </b>
 
 <%= form_with url: result_path(@result), local: true, method: :put do |form| %>
