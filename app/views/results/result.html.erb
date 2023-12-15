@@ -1,0 +1,9 @@
+<h1>Тест <%= @result.test.title %> завершен!</h1>
+
+<% if @result.successful? %>
+  <p style="color: green;">Поздравляем! Вы успешно прошли тест. Ваш процент успеха составляет <%= @result.success_rate %>%.</p>
+<% else %>
+  <p style="color: red;">К сожалению, вы не прошли тест. Ваш процент успеха составляет <%= @result.success_rate %>%.</p>
+<% end %>
+
+<p><%= link_to 'Вернуться к списку тестов', tests_path %></p>
