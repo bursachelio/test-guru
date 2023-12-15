@@ -1,4 +1,6 @@
 class Result < ApplicationRecord
+  SUCCESS_RATIO = 85
+
   belongs_to :user
   belongs_to :test
   belongs_to :current_question, class_name: 'Question', optional: true
@@ -6,7 +8,7 @@ class Result < ApplicationRecord
   before_validation :set_current_question
 
   def successful?
-    success_rate >= 85
+    success_rate >= SUCCESS_RATIO
   end
 
   def success_rate
@@ -44,8 +46,7 @@ class Result < ApplicationRecord
   end
 
   def correct_answer?(answer_ids)
-    answer_ids = [] if answer_ids.nil?
-    correct_answers.ids.sort == answer_ids.map(&:to_i).sort
+    correct_answers.ids.sort == answer_ids.to_a.map(&:to_i).sort
   end
 
   def correct_answers
