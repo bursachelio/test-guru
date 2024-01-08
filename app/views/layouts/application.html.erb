@@ -13,8 +13,13 @@
   <body>
     <% if logged_in? %>
       <p class="nav user">Welcome, <b><%= current_user.email %></b> Guru</p>
+      <%= link_to 'Logout', logout_path %>
+    <% else %>
+      <%= link_to 'Register', register_path %>
+      <%= link_to 'Login', login_path %>
     <% end %>
-
+    <%= link_to 'Project Name', root_path %>
+    
     <%= yield %>
 
     <%= render 'layouts/footer' %>
