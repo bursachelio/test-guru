@@ -9,8 +9,8 @@
 
 # Создание пользователей
 users = User.create!([
-  { name: 'Author', email: 'author@example.com' },
-  { name: 'User 1', email: 'user1@example.com' }
+  { name: 'Author', email: 'author@example.com', password: 'password', password_confirmation: 'password' },
+  { name: 'User 1', email: 'user1@example.com', password: 'password', password_confirmation: 'password' }
 ])
 
 # Создание категорий
