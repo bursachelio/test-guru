@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   helper_method :current_user,
   :logged_in?
 
+  before_action :store_location
+
   private
 
   def authenticate_user!
@@ -18,5 +20,11 @@ class ApplicationController < ActionController::Base
 
   def logged_in?
     current_user.present?
+  end
+
+  def store_location
+    if (!request.fullpath.match("/login") && !request.xhr?)
+      session[:previous_url] = request.original_url 
+    end
   end
 end

@@ -8,7 +8,9 @@ class User < ApplicationRecord
   has_many :results, dependent: :destroy
   has_many :tests, through: :results
 
-  validates :email, presence: true
+  validates :email, presence: true,
+                    uniqueness: true,
+                    format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password, presence: true, if: Proc.new { |u| u.password_digest.blank? }
   validates :password, confirmation: true
 

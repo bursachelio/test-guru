@@ -1,16 +1,13 @@
 class TestsController < ApplicationController
   before_action :set_test, only: %i[show edit update destroy]
   before_action :authenticate_user!
+  before_action :logged_in_user
 
   def start
-    set_test
-    set_user
+    @test = Test.find(params[:id])
+    @user = current_user
     @user.tests.push(@test)
     redirect_to @user.result(@test)
-  end
-
-  def set_user
-    @user = User.first
   end
 
   def index
@@ -60,5 +57,12 @@ class TestsController < ApplicationController
   
   def test_params
     params.require(:test).permit(:title, :level, :author_id, :category_id)
+  end
+
+  def logged_in_user
+    unless logged_in?
+      flash[:danger] = "Please log in."
+      redirect_to login_url
+    end
   end
 end
