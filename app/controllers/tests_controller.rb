@@ -1,15 +1,10 @@
 class TestsController < ApplicationController
-  before_action :set_test, only: %i[show edit update destroy]
+  before_action :set_test, only: %i[start show edit update destroy]
+  before_action :authenticate_user!
 
   def start
-    set_test
-    set_user
-    @user.tests.push(@test)
-    redirect_to @user.result(@test)
-  end
-
-  def set_user
-    @user = User.first
+    current_user.tests.push(@test)
+    redirect_to current_user.result(@test)
   end
 
   def index
@@ -26,6 +21,7 @@ class TestsController < ApplicationController
 
   def create
     @test = Test.new(test_params)
+    @test.author_id = current_user.id
   
     if @test.save
       redirect_to @test
@@ -35,7 +31,6 @@ class TestsController < ApplicationController
   end
 
   def edit 
-    
   end
   
   def update
@@ -58,6 +53,6 @@ class TestsController < ApplicationController
   end
   
   def test_params
-    params.require(:test).permit(:title, :level, :author_id, :category_id)
+    params.require(:test).permit(:title, :level, :category_id)
   end
 end
