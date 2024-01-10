@@ -1,13 +1,10 @@
 class TestsController < ApplicationController
-  before_action :set_test, only: %i[show edit update destroy]
+  before_action :set_test, only: %i[start show edit update destroy]
   before_action :authenticate_user!
-  before_action :logged_in_user
 
   def start
-    @test = Test.find(params[:id])
-    @user = current_user
-    @user.tests.push(@test)
-    redirect_to @user.result(@test)
+    current_user.tests.push(@test)
+    redirect_to current_user.result(@test)
   end
 
   def index
@@ -24,6 +21,7 @@ class TestsController < ApplicationController
 
   def create
     @test = Test.new(test_params)
+    @test.author_id = current_user.id
   
     if @test.save
       redirect_to @test
@@ -33,7 +31,6 @@ class TestsController < ApplicationController
   end
 
   def edit 
-    
   end
   
   def update
@@ -56,13 +53,6 @@ class TestsController < ApplicationController
   end
   
   def test_params
-    params.require(:test).permit(:title, :level, :author_id, :category_id)
-  end
-
-  def logged_in_user
-    unless logged_in?
-      flash[:danger] = "Please log in."
-      redirect_to login_url
-    end
+    params.require(:test).permit(:title, :level, :category_id)
   end
 end
